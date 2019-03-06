@@ -9,7 +9,8 @@ with open('anki.txt', 'r') as readfile, open('anki.csv', 'w') as writefile:
 	writer = csv.writer(writefile, quoting=csv.QUOTE_MINIMAL)
 
 	# the fields of the dictionary cards are of the form "front, back"
-	writer.writerow(["Front","Back"])
+	# not necessary, though
+	#writer.writerow(["Front","Back"])
 
 
 	definition = None 
@@ -21,7 +22,8 @@ with open('anki.txt', 'r') as readfile, open('anki.csv', 'w') as writefile:
 			writer.writerow([cur_line[:-1], None])
 		# when this happens, we need to write a definition card
 		elif cur_line == "\n" and dict_card:
-			definition = definition[:-1]
+			if definition:
+				definition = definition[:-1]
 			dict_card.append(definition)
 			writer.writerow(dict_card)
 			dict_card = None
