@@ -1,7 +1,71 @@
 import csv
-
+import subprocess
+import time
+import os 
 # determines whether or not the card is a sentence
 is_sentence = lambda line : line and line[0] == "「" and line[-1] == "」"
+
+
+def appendStr(ary, number):
+	ary.append(atr(number))
+
+def findTimeString():
+	curTime = time.localTime()
+
+	# add the date values
+	timeValues = []
+	appendStr(timeValues, curTime.tm_year)
+	appendStr(timeValues, curTime.tm_mon)
+	appendStr(timeValues, curTime.tm_mday)
+
+
+	timeString = timeValues.join('/') 
+
+	timeValues = []
+
+	appendStr(timeValues, curTime.tm_hour)
+	appendStr(timeValues, curTime.tm_min)
+	appendStr(timeValues, curTime.tm_sec)
+
+	timeString = timeString + "-" + timeValues.join(':')
+
+
+	return timeString
+
+
+def backupFiles():
+	timeString = findTimeString()
+	backupDir = os.path.expanduser("~/Dropbox/anki/jpn_native/")
+
+
+	subprocess.call(["cp", "anki.txt", backupDir + timeString + ".txt"])
+
+def appendStr(ary, number):
+	ary.append("%02d" %(number))
+
+def findTimeString():
+	curTime = time.localtime()
+
+	# add the date values
+	timeValues = []
+	appendStr(timeValues, curTime.tm_year)
+	appendStr(timeValues, curTime.tm_mon)
+	appendStr(timeValues, curTime.tm_mday)
+
+
+	timeString = '-'.join(timeValues)
+
+	timeValues = []
+
+	appendStr(timeValues, curTime.tm_hour)
+	appendStr(timeValues, curTime.tm_min)
+	appendStr(timeValues, curTime.tm_sec)
+
+	timeString = timeString + "-" + ":".join(timeValues)
+
+
+	return timeString
+
 
 
 
@@ -40,3 +104,9 @@ with open('anki.txt', 'r') as readfile, open('anki.csv', 'w') as writefile:
 
 	readfile.close()
 	writefile.close()
+
+# backup the files
+
+backupFiles()
+
+
