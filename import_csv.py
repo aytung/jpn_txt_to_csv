@@ -82,10 +82,10 @@ with open('anki.txt', 'r') as readfile, open('anki.csv', 'w') as writefile:
 
 	for cur_line in readfile:
 		# if it is a sentence, immediately write it
-		if is_sentence(cur_line.strip()):
-			writer.writerow([cur_line[:-1], None])
+		#if is_sentence(cur_line.strip()):
+		#	writer.writerow([cur_line[:-1], None])
 		# when this happens, we need to write a definition card
-		elif cur_line == "\n" and dict_card:
+		if cur_line == "\n" and dict_card:
 			if definition:
 				definition = definition[:-1]
 			dict_card.append(definition)
